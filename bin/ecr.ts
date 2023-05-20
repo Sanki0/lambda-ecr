@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { LambdaContainerStack } from '../lib/lambda-container-stack';
 import { EcrStack } from '../lib/ecr-stack';
 
 const cdk_env: any = {};
@@ -10,14 +9,6 @@ Object.keys(process.env)
   .map((k) => (cdk_env[k] = process.env[k]));
 
 const app = new cdk.App();
-new LambdaContainerStack(app, 'LambdaContainerStack', {
-  env: {
-    region: process.env["CDK_DEPLOY_REGION"],
-    account: process.env["CDK_DEPLOY_ACCOUNT"],
-    ...cdk_env,
-  },
-});
-
 new EcrStack(app, 'EcrStack', {
   env: {
     region: process.env["CDK_DEPLOY_REGION"],

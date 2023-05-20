@@ -1,14 +1,7 @@
-# Welcome to your CDK TypeScript project
+aws ecr --region <region> | docker login -u AWS -p <encrypted_token> <repo_uri>
 
-This is a blank project for CDK development with TypeScript.
+need to execute docker logout after pushing
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+docker tag [image name]  [repository Uri]
 
-## Useful commands
-
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+docker push [repository Uri]
