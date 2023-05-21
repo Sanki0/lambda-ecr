@@ -1,11 +1,19 @@
-FROM golang:1.19
+# i want to create a golang image that will be pushed to ecr and used as a lambda function
 
-WORKDIR /app
+FROM golang AS builder
 
-COPY go.mod ./
+WORKDIR /go-example
+COPY go.mod .
 
+RUN go mod download
 COPY . .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /bin/go-example .
 
-RUN go build -o main .
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+RUN addgroup -S go-example && adduser -S go-example -G go-example
+USER go-example
+WORKDIR /home/go-example
+COPY --from=builder /bin/go-example ./
 
-CMD [ "./main" ]
+ENTRYPOINT ["./go-example"]
