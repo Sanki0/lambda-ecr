@@ -22,23 +22,24 @@ export class EcrStack extends cdk.Stack {
 
     repository.grantPullPush(pushRole);
 
-    const imagePrint = new ecr_assets.DockerImageAsset(this, 'ImagePrint', {
-      directory: path.join(__dirname, '../assets/functions/print'),
-      file: 'Dockerfile',
-      buildArgs: {
-        'BUILDKIT_INLINE_CACHE': '1',
-      },
+    // const imagePrint = new ecr_assets.DockerImageAsset(this, 'ImagePrint', {
+    //   directory: path.join(__dirname, '../assets/functions/print'),
+    //   file: 'Dockerfile',
 
-    });
+    // });
 
 
 
-    new cdk.CfnOutput(this, 'ImagePrintUri', {
-      value: imagePrint.imageUri,
-    });
+    // new cdk.CfnOutput(this, 'ImagePrintUri', {
+    //   value: imagePrint.imageUri,
+    // });
 
     new cdk.CfnOutput(this, 'ECRRepositoryUri', {
       value: repository.repositoryUri,
+    });
+
+    new cdk.CfnOutput(this, 'ECRRepositoryArn', {
+      value: repository.repositoryArn,
     });
 
 
